@@ -12,7 +12,7 @@ export default async (ctx, next) => {
         form: ctx.request.body,
         rejectUnauthorized: false,
         headers: {
-          ...(config.token ? { Authorization: `bearer ${config.token}` } : {}),
+          ...(config.token ? { Authorization: config.token } : {}),
           'Content-Type': 'application/x-www-form-urlencoded',
           "X-Requested-With": 'XMLHttpRequest'
         }

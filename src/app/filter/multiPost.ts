@@ -20,7 +20,7 @@ export default async (ctx, next) => {
           rejectUnauthorized: false,
           headers: {
             'Content-Type': contentType,
-            ...(config.token ? { Authorization: `bearer ${config.token}` } : {}),
+            ...(config.token ? { Authorization: config.token } : {}),
             Connection: 'keep-alive',
             "X-Requested-With": 'XMLHttpRequest'
           }

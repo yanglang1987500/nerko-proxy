@@ -3,40 +3,39 @@ import { mock, cookieCheck, doGet, formPost, jsonPost, jsonPut, normalPut,
 import config from './config';
 import { Method } from './util/enum';
 
-const getFilterList = [
-  mock,
-  cookieCheck,
-  doGet,
-  end
-];
-
-const postFilterList = [
-  mock,
-  cookieCheck,
-  formPost,
-  jsonPost,
-  multiPost,
-  end
-];
-
-const putFilterList = [
-  cookieCheck,
-  jsonPut,
-  normalPut,
-  end
-];
-
-const deleteFilterList = [
-  cookieCheck,
-  jsonDelete,
-  normalDelete,
-  end
-];
+const filterMap = {
+  [Method.get]: [
+    mock,
+    cookieCheck,
+    doGet,
+    end
+  ],
+  [Method.post]: [
+    mock,
+    cookieCheck,
+    formPost,
+    jsonPost,
+    multiPost,
+    end
+  ],
+  [Method.put]: [
+    cookieCheck,
+    jsonPut,
+    normalPut,
+    end
+  ],
+  [Method.delete]:  [
+    cookieCheck,
+    jsonDelete,
+    normalDelete,
+    end
+  ]
+};
 
 const onlyMock = [mock, end];
 
-export default async (method, ctx, next) => {
-  const list = config.type === 'None' ? onlyMock : getListByMethod(method);
+export default async (method: Method, ctx, next) => {
+  const list = config.type === 'None' ? onlyMock : filterMap[method];
   await setCookie(ctx, () => {});
   let cursor = 0;
   const nextFilter = async () => {
@@ -46,16 +45,3 @@ export default async (method, ctx, next) => {
   await next();
   config.refreshLastTime();
 };
-
-const getListByMethod = (method) => {
-  switch(method) {
-    case Method.get:
-      return getFilterList;
-    case Method.post:
-      return postFilterList;
-    case Method.put:
-      return putFilterList;
-    case Method.delete:
-      return deleteFilterList;
-  }
-}

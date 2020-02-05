@@ -12,7 +12,7 @@ export default async (ctx, next) => {
       rejectUnauthorized: false,
       qs: param,
       headers: {
-        ...(config.token ? { Authorization: `bearer ${config.token}` } : {}),
+        ...(config.token ? { Authorization: config.token } : {}),
         "X-Requested-With": 'XMLHttpRequest'
       }
     }, function (error, response, body) {

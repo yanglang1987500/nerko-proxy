@@ -15,7 +15,7 @@ export default async (ctx, next) => {
         json: true,
         rejectUnauthorized: false,
         headers: {
-          ...(config.token ? { Authorization: `bearer ${config.token}` } : {}),
+          ...(config.token ? { Authorization: config.token } : {}),
           'Content-Type': 'application/json',
           "X-Requested-With": 'XMLHttpRequest'
         }
