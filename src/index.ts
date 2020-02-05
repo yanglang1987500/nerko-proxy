@@ -11,40 +11,40 @@ const Applicaton = (mockMapping, mockDataPath) => {
 
   const router = new Router();
   const app = new Koa();
-  
+
   app.use(bodyParser());
-  app.use(async (ctx,next)=>{
-      // 自定义中间件，设置跨域需要的响应头。
+  app.use(async (ctx, next) => {
+    // 自定义中间件，设置跨域需要的响应头。
     ctx.set('Access-Control-Allow-Headers', '*');
     ctx.set('Access-Control-Allow-Methods', '*');
     ctx.set('Access-Control-Allow-Credentials', 'true');
     await next();
   });
-  
+
   app.use(cors({
     origin: () => "*",
     credentials: true,
   }));
 
-	config.setMockDataPath(mockDataPath);
+  config.setMockDataPath(mockDataPath);
   config.setMockMapping(mockMapping);
   const type = readline.question(`Please select which point you want to login in and type in number 
   ${config.points.map((point, index) => `\n ${index}: ${point.type}`).join('')}
   `);
   config.setType(config.points[parseInt(type, 10)].type);
-  
-  const point = config.getClient();
-	if (point.needLogin) {
-		const account = readline.question(`Please type in ${config.type} account :\n`);
-		config.setAccount(account);
-		const password = readline.question(`Please type in ${config.type} password :\n`);
-		config.setPassword(password);
-	}
 
-	console.log(`${config.type} agency start on port:${config.getPort()}`);
+  const point = config.getClient();
+  if (point.needLogin) {
+    const account = readline.question(`Please type in ${config.type} account :\n`);
+    config.setAccount(account);
+    const password = readline.question(`Please type in ${config.type} password :\n`);
+    config.setPassword(password);
+  }
+
+  console.log(`${config.type} agency start on port:${config.getPort()}`);
   app.use(router.routes()).use(router.allowedMethods());
-  
-	start(router);
+
+  start(router);
   app.listen(config.getPort(), () => {
     console.log(`server is starting at \n host:${config.getUrl()} \n port: ${config.getPort()}`);
   });
