@@ -59,10 +59,3 @@ export const setToken = config.setToken.bind(config);
 
 export { default as BasePoint } from './app/login/base';
 export { default as request } from './app/util/request';
-
-
-// ihwith36_251
-// Autest123!
-
-// 50001-559  
-// Susan@1234
