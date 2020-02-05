@@ -1,13 +1,15 @@
 import * as Koa from 'koa';
 import * as bodyParser from 'koa-bodyparser';
 import * as readline from 'readline-sync';
+import * as colors from 'colors-console';
+import * as inquirer from 'inquirer';
 import * as cors from 'koa2-cors';
 import * as Router from 'koa-router';
 import config from './app/config';
 import { start } from './app/index.js';
 import Base from "./app/login/base";
 
-const Applicaton = (mockMapping, mockDataPath) => {
+const Applicaton = async (mockMapping, mockDataPath) => {
 
   const router = new Router();
   const app = new Koa();
@@ -28,20 +30,24 @@ const Applicaton = (mockMapping, mockDataPath) => {
 
   config.setMockDataPath(mockDataPath);
   config.setMockMapping(mockMapping);
-  const type = readline.question(`Please select which point you want to login in and type in number 
-  ${config.points.map((point, index) => `\n ${index}: ${point.type}`).join('')}
-  `);
-  config.setType(config.points[parseInt(type, 10)].type);
+  console.log(colors('red', ``)); 
+  const answer = await inquirer.prompt({
+    name: 'type',
+    type: 'rawlist',
+    message: 'Please select which point you want to login in',
+    choices: config.points.map(p => p.type)
+  });
+  config.setType(answer.type);
 
   const point = config.getClient();
   if (point.needLogin) {
-    const account = readline.question(`Please type in ${config.type} account :\n`);
+    const account = readline.question(`Please type in ${colors('green', config.type)} account :\n`);
     config.setAccount(account);
-    const password = readline.question(`Please type in ${config.type} password :\n`);
+    const password = readline.question(`Please type in ${colors('green', config.type)} password :\n`);
     config.setPassword(password);
   }
 
-  console.log(`${config.type} agency start on port:${config.getPort()}`);
+  console.log(`${colors('green', config.type)} agency start on port: ${colors('red', config.getPort())}`);
   app.use(router.routes()).use(router.allowedMethods());
 
   start(router);

@@ -23,6 +23,9 @@
 		"@types/request": "^2.48.4"
 	},
 	"dependencies": {
+		"@types/inquirer": "^6.5.0",
+		"colors-console": "^1.0.3",
+		"inquirer": "^7.0.4",
 		"koa": "^2.11.0",
 		"koa-bodyparser": "^4.2.1",
 		"koa-router": "^8.0.6",
