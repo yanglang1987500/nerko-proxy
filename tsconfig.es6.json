@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+        "outDir": "es",
+        "sourceMap": true,
+        "declaration": true,
+        "module": "es6",
+        "target": "es6",
+        "moduleResolution": "node",
+        "rootDir": "src",
+        "lib": [
+            "es5",
+            "es2017",
+            "dom",
+            "scripthost"
+        ]
+    },
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "lib"
+    ]
+}

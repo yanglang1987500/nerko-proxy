@@ -1,0 +1,35 @@
+{
+	"name": "nerko-proxy",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./lib/index.js",
+	"module": "./es/index.js",
+	"types": "./lib/index.d.ts",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "npm run build && node ./lib/index.js",
+		"build": "rm -rf ./lib && rm -rf ./es && tsc -p tsconfig.json && tsc -p tsconfig.es6.json"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@types/koa": "^2.11.0",
+		"@types/koa-bodyparser": "^4.3.0",
+		"@types/koa-router": "^7.4.0",
+		"@types/koa2-cors": "^2.0.1",
+		"@types/mockjs": "^1.0.2",
+		"@types/readline-sync": "^1.4.3",
+		"@types/request": "^2.48.4"
+	},
+	"dependencies": {
+		"koa": "^2.11.0",
+		"koa-bodyparser": "^4.2.1",
+		"koa-router": "^8.0.6",
+		"koa2-cors": "^2.0.6",
+		"mockjs": "^1.1.0",
+		"readline-sync": "^1.4.10",
+		"request": "^2.88.0",
+		"url-pattern": "^1.0.3"
+	}
+}
