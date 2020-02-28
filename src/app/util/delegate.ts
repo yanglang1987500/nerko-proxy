@@ -8,7 +8,7 @@ const responseMap = {
 
 export const delegateResponse = (innerResponse, ctx, error) => {
   if (error != null) {
-    ctx.status = 400;
+    ctx.status = 500;
     ctx.body = error.toString();
     return;
   }

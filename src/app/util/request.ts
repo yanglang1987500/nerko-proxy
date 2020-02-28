@@ -1,4 +1,5 @@
 const _request = require('request');
+// require('request').debug = true;
 
 const _jar = _request.jar();
 const request = _request.defaults({

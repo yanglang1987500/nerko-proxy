@@ -9,7 +9,7 @@ import config from './app/config';
 import { start } from './app/index.js';
 import Base from "./app/login/base";
 
-const Applicaton = async (mockMapping, mockDataPath) => {
+const Applicaton = async (mockMapping: IKeyValueMap, mockDataPath: string, origin: string) => {
 
   const router = new Router();
   const app = new Koa();
@@ -24,7 +24,7 @@ const Applicaton = async (mockMapping, mockDataPath) => {
   });
 
   app.use(cors({
-    origin: () => "*",
+    origin: () => origin,
     credentials: true,
   }));
 

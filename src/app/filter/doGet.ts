@@ -5,7 +5,14 @@ import { delegateResponse } from '../util/delegate';
 export default async (ctx, next) => {
   const url = ctx.request.path;
   console.log('proxy get ', url)
-  const param = { ...ctx.query };
+  const param = Object.keys(ctx.query).reduce((p, c) => {
+    if (/\[\]$/.test(c) && Object.prototype.toString.call(ctx.query[c]) === '[object Array]') {
+      p[c.replace('[]', '')] = ctx.query[c];
+    } else {
+      p[c] = ctx.query[c];
+    }
+    return p;
+  }, {});
   return new Promise(resolve => {
     request.get({
       url: config.getUrl() + url,
