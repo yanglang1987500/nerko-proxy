@@ -10,7 +10,6 @@ export default async (ctx, next) => {
     console.log('proxy jsonPut', url);
     return new Promise(resolve => {
       request.put(config.getUrl() + url, {
-        qs: ctx.request.body,
         body: ctx.request.body,
         json: true,
         rejectUnauthorized: false,

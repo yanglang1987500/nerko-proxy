@@ -9,7 +9,6 @@ export default async (ctx, next) => {
     console.log('proxy jsonPost', url);
     return new Promise(resolve => {
       request.post(config.getUrl() + url, {
-        qs: ctx.request.body,
         body: ctx.request.body,
         json: true,
         rejectUnauthorized: false,
