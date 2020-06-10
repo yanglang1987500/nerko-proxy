@@ -25,13 +25,12 @@
 	},
 	"dependencies": {
 		"colors-console": "^1.0.3",
-		"inquirer": "7.0.4",
+		"inquirer": "^7.1.0",
 		"koa": "^2.11.0",
 		"koa-bodyparser": "^4.2.1",
 		"koa-router": "^8.0.6",
 		"koa2-cors": "^2.0.6",
 		"mockjs": "^1.1.0",
-		"readline-sync": "^1.4.10",
 		"request": "^2.88.0",
 		"url-pattern": "^1.0.3"
 	}
