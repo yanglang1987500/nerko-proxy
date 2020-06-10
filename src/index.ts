@@ -43,13 +43,14 @@ const Applicaton = async (mockMapping: IKeyValueMap, mockDataPath: string, origi
     const answer1 = await inquirer.prompt({
       name: 'account',
       type: 'input',
-      message: `Please type in ${colors('green', config.type)} account `
+      message: `Please type in ${colors('green', config.type)} account: \n`
     });
     config.setAccount(answer1.account);
     const answer2 = await inquirer.prompt({
       name: 'password',
-      type: 'mask',
-      message: `Please type in ${colors('green', config.type)} password `
+      type: 'password',
+      mask: "*",
+      message: `Please type in ${colors('green', config.type)} password: \n`
     });
     config.setPassword(answer2.password);
   }
