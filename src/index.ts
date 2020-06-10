@@ -48,7 +48,7 @@ const Applicaton = async (mockMapping: IKeyValueMap, mockDataPath: string, origi
     config.setAccount(answer1.account);
     const answer2 = await inquirer.prompt({
       name: 'password',
-      type: 'input',
+      type: 'mask',
       message: `Please type in ${colors('green', config.type)} password `
     });
     config.setPassword(answer2.password);
