@@ -1,6 +1,5 @@
 import * as Koa from 'koa';
 import * as bodyParser from 'koa-bodyparser';
-import * as readline from 'readline-sync';
 import * as colors from 'colors-console';
 import * as inquirer from 'inquirer';
 import * as cors from 'koa2-cors';
@@ -41,10 +40,18 @@ const Applicaton = async (mockMapping: IKeyValueMap, mockDataPath: string, origi
 
   const point = config.getClient();
   if (point.needLogin) {
-    const account = readline.question(`Please type in ${colors('green', config.type)} account :\n`);
-    config.setAccount(account);
-    const password = readline.question(`Please type in ${colors('green', config.type)} password :\n`);
-    config.setPassword(password);
+    const answer1 = await inquirer.prompt({
+      name: 'account',
+      type: 'input',
+      message: `Please type in ${colors('green', config.type)} account `
+    });
+    config.setAccount(answer1.account);
+    const answer2 = await inquirer.prompt({
+      name: 'password',
+      type: 'input',
+      message: `Please type in ${colors('green', config.type)} password `
+    });
+    config.setPassword(answer2.password);
   }
 
   console.log(`${colors('green', config.type)} agency start on port: ${colors('red', config.getPort())}`);
