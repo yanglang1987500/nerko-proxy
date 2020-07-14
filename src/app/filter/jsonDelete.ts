@@ -1,30 +1,23 @@
 import config from '../config';
-import request from '../util/request';
-import { delegateResponse } from '../util/delegate';
+import { tryCatchWrap } from '../util/delegate';
 import { ParameterizedContext, Next } from 'koa';
 import * as Router from 'koa-router';
+import { axios } from '../..';
 
 export default async (ctx: ParameterizedContext<any, Router.IRouterParamContext<any, {}>>, next: Next) => {
   const url = ctx.request.path;
   const contentType = ctx.headers['content-type'] || 'application/x-www-form-urlencoded';
   if (contentType.indexOf('application/json') !== -1) {
     console.log('proxy jsonDelete', url);
-    return new Promise(resolve => {
-      request.delete(config.getUrl() + url, {
-        qs: ctx.request.body,
-        body: ctx.request.body,
-        json: true,
-        rejectUnauthorized: false,
-        headers: {
-          ...(config.token ? { Authorization: config.token } : {}),
-          'Content-Type': 'application/json',
-          "X-Requested-With": 'XMLHttpRequest'
-        }
-      }, function (error, response, body) {
-        delegateResponse(response, ctx, error);
-        resolve();
-      });
-    });
+    return tryCatchWrap(() => axios.delete(config.getUrl() + url, {
+      data: ctx.request.body,
+      params: ctx.request.body,
+      headers: {
+        ...(config.token ? { Authorization: config.token } : {}),
+        'Content-Type': 'application/json',
+        "X-Requested-With": 'XMLHttpRequest'
+      }
+    }), ctx);    
   }
   await next();
 };

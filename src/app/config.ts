@@ -1,5 +1,5 @@
 import { None } from './login/index';
-import request, { jar } from './util/request';
+import { jar } from './util/axios';
 import Base from './login/base';
 import { IKeyValueMap } from '../typings';
 

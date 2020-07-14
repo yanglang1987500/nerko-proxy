@@ -1,8 +1,9 @@
 import config from '../config';
 import request from '../util/request';
-import { delegateResponse } from '../util/delegate';
+import { delegateResponse, tryCatchWrap } from '../util/delegate';
 import { ParameterizedContext, Next } from 'koa';
 import * as Router from 'koa-router';
+import { axios } from '../..';
 
 export default async (ctx: ParameterizedContext<any, Router.IRouterParamContext<any, {}>>, next: Next) => {
   const url = ctx.request.path;
@@ -15,21 +16,17 @@ export default async (ctx: ParameterizedContext<any, Router.IRouterParamContext<
       ctx.req.addListener('data', function (chunk) {
         data.push(chunk); //读取参数流转化为字符串
       });
-      ctx.req.addListener('end', function () {
+      ctx.req.addListener('end', async function () {
         const body = Buffer.concat(data);
-        request.post(config.getUrl() + url, {
-          body: body,
-          rejectUnauthorized: false,
+        await tryCatchWrap(() => axios.post(config.getUrl() + url, body, {
           headers: {
             'Content-Type': contentType,
             ...(config.token ? { Authorization: config.token } : {}),
             Connection: 'keep-alive',
             "X-Requested-With": 'XMLHttpRequest'
           }
-        }, function (error, response, body) {
-          delegateResponse(response, ctx, error);
-          resolve();
-        });
+        }), ctx);
+        resolve();
       });
     });
   }

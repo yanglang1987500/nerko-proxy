@@ -87,7 +87,7 @@ export const register = (point: Base) => {
 export const setToken = config.setToken.bind(config);
 
 export { default as BasePoint } from './app/login/base';
-export { default as request } from './app/util/request';
+export { default as axios } from './app/util/axios';
 export { addRouter } from './app/filterManage';
 export { Method } from './app/util/enum';
 export const setAccount = (account: string, password: string, type: string) => {

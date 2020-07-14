@@ -6,7 +6,7 @@ const cookieMap = {};
 
 export default async (ctx: ParameterizedContext<any, Router.IRouterParamContext<any, {}>>, next: Next) => {
   const jar = config.getJar();
-  const cookieStr = jar.getCookieString(config.getUrl());
+  const cookieStr = jar.getCookieStringSync(config.getUrl());
   if (!cookieStr)
     return;
   if (cookieMap[cookieStr]) {

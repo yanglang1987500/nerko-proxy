@@ -8,12 +8,21 @@ const responseMap = {
 
 export const delegateResponse = (innerResponse, ctx, error) => {
   if (error != null) {
-    ctx.status = 500;
+    ctx.status = innerResponse ? innerResponse.status : 500;
     ctx.body = error.toString();
     return;
   }
-  const body = innerResponse.body;
-  innerResponse && (ctx.status = innerResponse.statusCode);
+  const body = innerResponse.data;
+  innerResponse && (ctx.status = innerResponse.status);
   const dataType = Object.prototype.toString.call(body);
   ctx.body = responseMap[dataType] ? responseMap[dataType](body) : '';
 };
+
+export const tryCatchWrap = async (executor: () => Promise<any>, ctx) => {
+  try {
+    const res = await executor();
+    delegateResponse(res, ctx, null);
+  } catch(e) {
+    delegateResponse(e.response, ctx, e);
+  }
+}
