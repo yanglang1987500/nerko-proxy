@@ -1,8 +1,10 @@
 import config from '../config';
 import request from '../util/request';
 import { delegateResponse } from '../util/delegate';
+import { ParameterizedContext, Next } from 'koa';
+import * as Router from 'koa-router';
 
-export default async (ctx, next) => {
+export default async (ctx: ParameterizedContext<any, Router.IRouterParamContext<any, {}>>, next: Next) => {
   const url = ctx.request.path;
   const contentType = ctx.headers['content-type'] || 'application/x-www-form-urlencoded';
   if (contentType.indexOf('multipart/form-data') !== -1) {

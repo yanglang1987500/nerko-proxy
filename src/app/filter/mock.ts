@@ -3,8 +3,10 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as Mock from 'mockjs';
 import config from '../config';
+import { ParameterizedContext, Next } from 'koa';
+import * as Router from 'koa-router';
 
-export default async (ctx, next) => {
+export default async (ctx: ParameterizedContext<any, Router.IRouterParamContext<any, {}>>, next: Next) => {
   const url = ctx.request.path;
   const mockData = filter(url);
   if (mockData) {

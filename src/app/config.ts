@@ -1,6 +1,7 @@
 import { None } from './login/index';
 import request, { jar } from './util/request';
 import Base from './login/base';
+import { IKeyValueMap } from '../typings';
 
 class Config {
 

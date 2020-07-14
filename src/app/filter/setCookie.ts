@@ -1,8 +1,10 @@
 import config from '../config';
+import { ParameterizedContext, Next } from 'koa';
+import * as Router from 'koa-router';
 
 const cookieMap = {};
 
-export default async (ctx, next) => {
+export default async (ctx: ParameterizedContext<any, Router.IRouterParamContext<any, {}>>, next: Next) => {
   const jar = config.getJar();
   const cookieStr = jar.getCookieString(config.getUrl());
   if (!cookieStr)

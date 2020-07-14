@@ -1,9 +1,11 @@
 import config from '../config';
+import { ParameterizedContext, Next } from 'koa';
+import * as Router from 'koa-router';
 
 // 处理cookie失效重新登录
 let loginPromise = null;
 
-export default async (ctx, next) => {
+export default async (ctx: ParameterizedContext<any, Router.IRouterParamContext<any, {}>>, next: Next) => {
   if (!config.getClient().needLogin) {
     return await next();
   }
